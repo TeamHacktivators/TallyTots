@@ -30,7 +30,7 @@ function ImageUpload() {
       }
 
       axios
-        .post("http://127.0.0.1:5000/upload", data)
+        .post("https://99ad9257-e50e-43a3-a311-f5b65e329622-00-3vpdxbgii6bmk.sisko.replit.dev/upload", data)
         .then((response) => {
           console.log(response);
           if (response.status === 201) {
