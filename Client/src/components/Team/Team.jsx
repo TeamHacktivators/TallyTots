@@ -8,21 +8,21 @@ const teamMembers = [
     name: 'Vedant Sudhir Patil',
     role: 'AI/ML Engineer',
     punchline: 'Teaching machines to think they are humans. Success rate: 30%.',
-    linkedin: 'https://www.linkedin.com/in/charliebrown',
+    linkedin: 'https://www.linkedin.com/in/vedantspatil/',
     image: vedant 
   },
   {
     name: 'Sumit Grover',
     role: 'Full Stack Developer',
     punchline: 'Can code a full stack quickly but will debug it for days!',
-    linkedin: 'https://www.linkedin.com/in/alicejohnson',
+    linkedin: 'https://www.linkedin.com/in/sumit-grover-29a277256/',
     image: sumit
   },
   {
     name: 'Tushar Malhan',
     role: 'Full Stack Developer',
     punchline: 'Writes code so clean it makes it difficult even for the vacuum cleaner.',
-    linkedin: 'https://www.linkedin.com/in/bobsmith',
+    linkedin: 'https://www.linkedin.com/in/tushar-malhan-9998ab256/',
     image: tuhsar 
   }
 ];
