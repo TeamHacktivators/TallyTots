@@ -1,0 +1,11 @@
+#root {
+    max-width: 1280px;
+    margin: 0 auto;
+  
+    --primary: #FFFFFF;
+    --secondary-bold: #272343;
+    --secondary-light: #BAE8E8;
+    --secondary-lightest: #E3F6F5;
+  }
+  
+  
