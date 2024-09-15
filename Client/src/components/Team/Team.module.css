@@ -1,0 +1,66 @@
+.teamContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  font-family: sans-serif;
+}
+
+.heading {
+  font-size: 2.5rem;
+  color: #272343;
+  border-bottom: 5px dotted #272343;
+  margin-bottom: 10px;
+}
+
+.description {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  color: #036c5f;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  justify-content: center; 
+  max-width: 1200px; 
+  width: 100%;
+}
+
+.card {
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+}
+
+.image {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+.name {
+  font-size: 1.5rem;
+  margin: 10px 0;
+}
+
+.punchline {
+  font-style: italic;
+  margin-bottom: 15px;
+}
+
+.linkedin {
+  color: #0077b5;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.linkedin:hover {
+  text-decoration: underline;
+}
