@@ -8,8 +8,8 @@ import cv2
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
 
-UPLOAD_FOLDER = '../Client/public/static'
-OUTPUT_FOLDER = '../Client/public/runs'
+UPLOAD_FOLDER = './static'
+OUTPUT_FOLDER = './runs'
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['OUTPUT_FOLDER'] = OUTPUT_FOLDER
@@ -54,75 +54,74 @@ def hello_world():
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
-    # if request.method == 'POST':
-        if 'files[]' not in request.files:
-            resp = jsonify({
-                "message": 'No file part in the request',
-                "status": 'failed'
-            })
-            resp.status_code = 400
-            return resp
-        
-        files = request.files.getlist('files[]')
+    if 'files[]' not in request.files:
+        resp = jsonify({
+            "message": 'No file part in the request',
+            "status": 'failed'
+        })
+        resp.status_code = 400
+        return resp
+    
+    files = request.files.getlist('files[]')
 
-        errors = {}
-        success = False
-        results = [] 
+    errors = {}
+    success = False
+    results = [] 
 
-        for file in files:
-            if file and allowed_file(file.filename):
-                filename = secure_filename(file.filename)
-                filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-                file.save(filepath)
-                success = True
+    for file in files:
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            file.save(filepath)
+            success = True
 
-                image = cv2.imread(filepath)
-                if image is None:
-                    resp = jsonify({
-                        "message" : 'File could not be read',
-                        "status": 'failed'
-                    })
-                    continue
-
-                result = predict(model, image)
-                totalCount = count(result)
-                processedImage = draw_bounding_boxes(image, result)
-                processedImagePath = os.path.join(app.config['OUTPUT_FOLDER'], f"processed_{filename}")
-                cv2.imwrite(processedImagePath, processedImage)
-
-                results.append({
-                    "filename": filename,
-                    "count": totalCount,
-                    "status": 'Processed',
-                })
-
-            else:
+            image = cv2.imread(filepath)
+            if image is None:
                 resp = jsonify({
-                    "message" : 'File type not allowed',
+                    "message" : 'File could not be read',
                     "status": 'failed'
                 })
-                return resp
-            
-        if success and errors:
-            errors['message'] = 'File(s) successfully uploaded'
-            errors['status'] = 'failed'
-            resp=jsonify(errors)
-            resp.status_code = 500
+                continue
+
+            result = predict(model, image)
+            totalCount = count(result)
+            processedImage = draw_bounding_boxes(image, result)
+            processedImagePath = os.path.join(app.config['OUTPUT_FOLDER'], f"processed_{filename}")
+            cv2.imwrite(processedImagePath, processedImage)
+
+            results.append({
+                "filename": filename,
+                "count": totalCount,
+                "status": 'Processed',
+            })
+
+        else:
+            resp = jsonify({
+                "message" : 'File type not allowed',
+                "status": 'failed'
+            })
             return resp
         
-        if success:
-            resp = jsonify({
-                "message": 'Files sucessfully uploaded',
-                "status": 'success',
-                "results": results
-            })
-            print(results)
-            resp.status_code = 201
-            return resp
-        else:
-            resp = jsonify(errors)
-            resp.status_code = 500
-            return resp
+    if success and errors:
+        errors['message'] = 'File(s) successfully uploaded'
+        errors['status'] = 'failed'
+        resp=jsonify(errors)
+        resp.status_code = 500
+        return resp
+    
+    if success:
+        resp = jsonify({
+            "message": 'Files sucessfully uploaded',
+            "status": 'success',
+            "results": results
+        })
+        print(results)
+        resp.status_code = 201
+        return resp
+    else:
+        resp = jsonify(errors)
+        resp.status_code = 500
+        return resp
 
 @app.route('/predict', methods=['GET'])
 def process_image():
