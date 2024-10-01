@@ -30,7 +30,7 @@ function ImageUpload() {
       }
 
       axios
-        .post("http://127.0.0.1:5000/upload", data)
+        .post("https://tallytots.onrender.com/upload", data)
         .then((response) => {
           console.log(response);
           if (response.status === 201) {
